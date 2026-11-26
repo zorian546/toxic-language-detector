@@ -1,0 +1,230 @@
+{
+  "data": {
+    "source_rows": 159571,
+    "blank_rows": 0,
+    "duplicate_rows": 274,
+    "conflicting_groups_dropped": 13,
+    "eligible_unique_rows": 159284,
+    "sample_rows": 18000,
+    "seed": 42,
+    "input_sha256": "d27aedebd2e31e3203e667e5d162a17f14ae04a6e55a5894798a7d1902f4bbe5",
+    "splits": {
+      "train": {
+        "rows": 12594,
+        "abusive": 1279
+      },
+      "validation": {
+        "rows": 2692,
+        "abusive": 274
+      },
+      "test": {
+        "rows": 2698,
+        "abusive": 274
+      }
+    },
+    "usable_rows": 17984,
+    "split_exclusions": {
+      "train": {
+        "tokenless": 0,
+        "equivalent": 6
+      },
+      "validation": {
+        "tokenless": 0,
+        "equivalent": 8
+      },
+      "test": {
+        "tokenless": 0,
+        "equivalent": 2
+      }
+    }
+  },
+  "tokenizer_version": "3.10.4",
+  "selected_model": "naive_bayes",
+  "nb_threshold": 0.85,
+  "nb_feature_count": 350,
+  "rule_count": 54,
+  "variant_count": 10,
+  "validation": {
+    "rules": {
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.8388888888888889,
+      "recall": 0.551094890510949,
+      "f1": 0.6651982378854625,
+      "tn": 2389,
+      "fp": 29,
+      "fn": 123,
+      "tp": 151
+    },
+    "naive_bayes": {
+      "threshold": 0.85,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.732,
+      "recall": 0.6678832116788321,
+      "f1": 0.6984732824427481,
+      "tn": 2351,
+      "fp": 67,
+      "fn": 91,
+      "tp": 183
+    }
+  },
+  "nb_validation_threshold_trials": [
+    {
+      "threshold": 0.15,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.2811004784688995,
+      "recall": 0.8576642335766423,
+      "f1": 0.4234234234234235,
+      "tn": 1817,
+      "fp": 601,
+      "fn": 39,
+      "tp": 235
+    },
+    {
+      "threshold": 0.25,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.31994459833795014,
+      "recall": 0.843065693430657,
+      "f1": 0.463855421686747,
+      "tn": 1927,
+      "fp": 491,
+      "fn": 43,
+      "tp": 231
+    },
+    {
+      "threshold": 0.35,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.3553459119496855,
+      "recall": 0.8248175182481752,
+      "f1": 0.49670329670329666,
+      "tn": 2008,
+      "fp": 410,
+      "fn": 48,
+      "tp": 226
+    },
+    {
+      "threshold": 0.45,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.40653357531760437,
+      "recall": 0.8175182481751825,
+      "f1": 0.5430303030303031,
+      "tn": 2091,
+      "fp": 327,
+      "fn": 50,
+      "tp": 224
+    },
+    {
+      "threshold": 0.5,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.41776937618147447,
+      "recall": 0.8065693430656934,
+      "f1": 0.5504358655043585,
+      "tn": 2110,
+      "fp": 308,
+      "fn": 53,
+      "tp": 221
+    },
+    {
+      "threshold": 0.55,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.45020746887966806,
+      "recall": 0.791970802919708,
+      "f1": 0.5740740740740741,
+      "tn": 2153,
+      "fp": 265,
+      "fn": 57,
+      "tp": 217
+    },
+    {
+      "threshold": 0.65,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.5134474327628362,
+      "recall": 0.7664233576642335,
+      "f1": 0.6149341142020498,
+      "tn": 2219,
+      "fp": 199,
+      "fn": 64,
+      "tp": 210
+    },
+    {
+      "threshold": 0.75,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.6576271186440678,
+      "recall": 0.708029197080292,
+      "f1": 0.6818980667838312,
+      "tn": 2317,
+      "fp": 101,
+      "fn": 80,
+      "tp": 194
+    },
+    {
+      "threshold": 0.85,
+      "rows": 2692,
+      "abusive": 274,
+      "precision": 0.732,
+      "recall": 0.6678832116788321,
+      "f1": 0.6984732824427481,
+      "tn": 2351,
+      "fp": 67,
+      "fn": 91,
+      "tp": 183
+    }
+  ],
+  "held_out_jigsaw": {
+    "rules": {
+      "rows": 2698,
+      "abusive": 274,
+      "precision": 0.877906976744186,
+      "recall": 0.551094890510949,
+      "f1": 0.6771300448430494,
+      "tn": 2403,
+      "fp": 21,
+      "fn": 123,
+      "tp": 151
+    },
+    "naive_bayes": {
+      "rows": 2698,
+      "abusive": 274,
+      "precision": 0.788,
+      "recall": 0.718978102189781,
+      "f1": 0.7519083969465649,
+      "tn": 2371,
+      "fp": 53,
+      "fn": 77,
+      "tp": 197
+    }
+  },
+  "chat": {
+    "rules": {
+      "rows": 40,
+      "abusive": 20,
+      "precision": 0.5,
+      "recall": 0.35,
+      "f1": 0.4117647058823529,
+      "tn": 13,
+      "fp": 7,
+      "fn": 13,
+      "tp": 7
+    },
+    "naive_bayes": {
+      "rows": 40,
+      "abusive": 20,
+      "precision": 0.5714285714285714,
+      "recall": 0.6,
+      "f1": 0.5853658536585366,
+      "tn": 11,
+      "fp": 9,
+      "fn": 8,
+      "tp": 12
+    }
+  }
+}

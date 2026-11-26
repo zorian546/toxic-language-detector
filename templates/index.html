@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <title>Toxic Language Detector · Semantic Scholars</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <script defer src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="/" aria-label="Semantic Scholars home">
+        <span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        Semantic Scholars
+      </a>
+      <nav aria-label="Dashboard">
+        <a href="#detector">Detector</a>
+        <a href="#results">Evaluation</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="page-heading" id="detector" aria-labelledby="title">
+      <h1 id="title">Toxic Language Detector</h1>
+      <p class="intro">Screen English comments for abuse and toxic slang.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="checker" aria-labelledby="check-title">
+        <h2 id="check-title">Check a comment</h2>
+        <form id="comment-form">
+          <label class="visually-hidden" for="comment">Comment to check</label>
+          <textarea id="comment" maxlength="{{ max_text }}" rows="4" placeholder="Type or paste a comment…" required></textarea>
+          <div class="actions">
+            <button type="submit" id="analyze">Analyze comment</button>
+            <button type="button" class="secondary" id="samples">Try 3 examples</button>
+          </div>
+          <p class="error" id="error" role="alert" hidden></p>
+        </form>
+        <div class="prediction" id="prediction">
+          <div class="prediction-title">
+            <strong id="verdict" role="status">Awaiting a comment</strong>
+            <span class="model">{{ models[metrics.selected_model] }}</span>
+          </div>
+          <div class="prediction-evidence" id="evidence" hidden>
+            <p id="matches"></p>
+            <p id="signals" hidden></p>
+          </div>
+          <details class="comparison" id="comparison" hidden>
+            <summary>Compare both detectors</summary>
+            <p id="model-results"></p>
+          </details>
+        </div>
+      </section>
+
+      <section class="session" aria-labelledby="session-title">
+        <div class="section-heading">
+          <h2 id="session-title">Session activity</h2>
+          <button type="button" class="text-button" id="reset">Reset</button>
+        </div>
+        <div class="stats">
+          <div><strong id="checked">0</strong><span>Checked</span></div>
+          <div><strong id="flagged">0</strong><span>Flagged</span></div>
+          <div><strong id="rate">0%</strong><span>Flag rate</span></div>
+        </div>
+        <div class="chart">
+          <h3>Most frequent reviewed terms</h3>
+          <p id="empty-chart">Reviewed terms will appear here as they match.</p>
+          <ol id="term-chart" aria-label="Reviewed term frequencies"></ol>
+        </div>
+      </section>
+    </div>
+
+    <section class="evaluation" id="results" aria-labelledby="evaluation-title">
+      <div class="section-heading evaluation-header">
+        <h2 id="evaluation-title">Model evaluation</h2>
+        <div class="tabs" role="tablist" aria-label="Evaluation dataset">
+          <button id="show-jigsaw" type="button" role="tab" aria-controls="held_out_jigsaw" aria-selected="true">Jigsaw test</button>
+          <button id="show-chat" type="button" role="tab" aria-controls="chat" aria-selected="false" tabindex="-1">Chat test</button>
+        </div>
+      </div>
+      {% for key, description in [("held_out_jigsaw", "held-out Wikipedia comments"), ("chat", "hand-labelled synthetic chat cases")] %}
+      <div class="results" id="{{ key }}" role="tabpanel" aria-labelledby="show-{{ 'chat' if key == 'chat' else 'jigsaw' }}" tabindex="0" {% if key == "chat" %}hidden{% endif %}>
+        <p>{{ "{:,}".format(metrics[key]["rules"]["rows"]) }} {{ description }} ·
+          {{ "{:,}".format(metrics[key]["rules"]["abusive"]) }} labelled abusive</p>
+        <div class="table-wrap">
+          <table role="table" aria-label="Detector scores">
+            <thead><tr><th scope="col">Detector</th><th scope="col">Precision</th><th scope="col">Recall</th><th scope="col">F1</th><th scope="col">False flags</th><th scope="col">Missed abuse</th></tr></thead>
+            <tbody>
+            {% for model, result in metrics[key].items() %}
+              <tr>
+                <th scope="row">{{ models[model] }}{% if model == metrics.selected_model %} <span class="selected">In use</span>{% endif %}</th>
+                <td><span class="metric-label" aria-hidden="true">Precision</span>{{ '%.1f%%'|format(result.precision * 100) }}</td>
+                <td><span class="metric-label" aria-hidden="true">Recall</span>{{ '%.1f%%'|format(result.recall * 100) }}</td>
+                <td><span class="metric-label" aria-hidden="true">F1</span><strong>{{ '%.1f%%'|format(result.f1 * 100) }}</strong></td>
+                <td><span class="metric-label" aria-hidden="true">False flags</span>{{ result.fp }}</td>
+                <td><span class="metric-label" aria-hidden="true">Missed abuse</span>{{ result.fn }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endfor %}
+      <p class="footnote">The detector with the higher validation F1 runs the demo. Flags are for human review.</p>
+    </section>
+  </main>
+</body>
+</html>
